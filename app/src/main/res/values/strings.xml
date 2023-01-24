@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Personal-Trainer</string>
+    <string-array name="exercises">
+        <item>Cardio</item>
+        <item>Fuerza</item>
+        <item>Flexibilidad</item>
+    </string-array>
 </resources>
