@@ -20,17 +20,21 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    Fragment selectedFragment=new HomeFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         drawerLayout=findViewById(R.id.drawer_layout); //Funcionamiento del DrawerLayout
         navigationView=findViewById(R.id.navigation_view); //Funcionamiento del NavigationView
+        Fragment fragment=new HomeFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainerView,fragment).commit();
         //Selección de Fragment según se seleccione un item del NavigationView
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment selectedFragment=new HomeFragment();
                 int id=item.getItemId();
                 if (id==R.id.homeFragment){
                     selectedFragment=new HomeFragment();
