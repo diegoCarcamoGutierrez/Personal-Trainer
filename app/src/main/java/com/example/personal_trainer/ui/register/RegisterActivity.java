@@ -2,17 +2,22 @@ package com.example.personal_trainer.ui.register;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.accessibility.AccessibilityManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.personal_trainer.R;
 //import com.example.personaltrainer.R; //es Personal-Trainer ahora
 
@@ -26,6 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private Button buttonRegister;
     private Context context = this;
+    private RequestQueue requestQueue;
 
 
     @SuppressLint("MissingInflatedId")
@@ -39,12 +45,13 @@ public class RegisterActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.mail);
         editTextPassword = findViewById(R.id.password1);
         buttonRegister = findViewById(R.id.login);
+        requestQueue = Volley.newRequestQueue(this);
 
         //Se activa cuando el usuario pulsa el boton de registro
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //   Toast.makeText(this, "Esperando",5).show();
+
                 sendPostRegister();
             }
         });
@@ -52,10 +59,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     //método que hace una petición post
     private void sendPostRegister() {
+        //Toast.makeText(context,"Por aquí",Toast.LENGTH_LONG).show();
         JSONObject requestBody = new JSONObject();
         try {
-            requestBody.put("username", editTextUsername.getText().toString());
-            requestBody.put("email", editTextEmail.getText().toString());
+            requestBody.put("name", editTextUsername.getText().toString());
+            requestBody.put("mail", editTextEmail.getText().toString());
             requestBody.put("password", editTextPassword.getText().toString());
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -63,22 +71,22 @@ public class RegisterActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "https://63bd4219fa38d30d85de40e4.mockapi.io",
+                "https://63c57b6af3a73b3478575467.mockapi.io/user",
                 requestBody,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        Toast.makeText(context,"Usuario creado",Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(context, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
                     }
                 }
         );
-
+        this.requestQueue.add(request);
     }
 
 }
