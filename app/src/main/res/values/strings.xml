@@ -1,6 +1,5 @@
 
 <resources>
-
     <string name="app_name">Personal-Trainer</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="prompt_email">Email</string>
@@ -18,5 +17,4 @@
     <string name="hello_stats_fragment">Hello stats fragment</string>
     <string name="open_drawer">open drawer</string>
     <string name="close_drawer">close drawer</string>
-
 </resources>
