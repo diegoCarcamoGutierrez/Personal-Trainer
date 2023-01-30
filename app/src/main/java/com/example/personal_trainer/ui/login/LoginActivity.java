@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.personal_trainer.MainActivity;
 import com.example.personal_trainer.R;
 import com.example.personal_trainer.ui.login.StatusActivity;
 
@@ -74,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                         // Si la respuesta está OK, mostramos un Toast
                         // Esta línea asume que private Context context = this; está definido
                         Toast.makeText(context, "Token: " + receivedToken, Toast.LENGTH_LONG).show();
-                        Intent I = new Intent(context, StatusActivity.class);
+                        Intent I = new Intent(context, MainActivity.class);
                         context.startActivity(I);
                         // Instanciamos un objeto de tipo SharedPreferences
                         // En el constructor pasamos un String. SIEMPRE será el mismo para nuestra aplicación.
