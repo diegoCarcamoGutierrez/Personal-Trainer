@@ -18,5 +18,6 @@
     <string name="hello_stats_fragment">Hello stats fragment</string>
     <string name="open_drawer">open drawer</string>
     <string name="close_drawer">close drawer</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>
