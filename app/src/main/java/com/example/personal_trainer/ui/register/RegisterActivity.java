@@ -1,4 +1,4 @@
-package com.example.personaltrainer.register;
+package com.example.personal_trainer.ui.register;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
