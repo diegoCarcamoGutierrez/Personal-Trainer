@@ -1,5 +1,6 @@
 package com.example.personal_trainer.ui.login;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.personal_trainer.MainActivity;
 import com.example.personal_trainer.R;
 import com.example.personal_trainer.ui.login.StatusActivity;
+import com.example.personal_trainer.ui.register.RegisterActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,9 +31,11 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private Button boton;
+    private TextView gotoRegister;
     private Context context= this;
     private RequestQueue queue;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +43,15 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById( R.id.password);
         boton = findViewById(R.id.login);
+        gotoRegister = findViewById(R.id.gotoRegister);
+
+        gotoRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent I = new Intent(context, RegisterActivity.class);
+                context.startActivity(I);
+            }
+        });
 
 
         boton.setOnClickListener(new View.OnClickListener() {
