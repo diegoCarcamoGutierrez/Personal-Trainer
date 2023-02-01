@@ -2,6 +2,7 @@ package com.example.personal_trainer.ui.register;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.personal_trainer.MainActivity;
 import com.example.personal_trainer.R;
 //import com.example.personaltrainer.R; //es Personal-Trainer ahora
 
@@ -57,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     //método que hace una petición post
     private void sendPostRegister() {
+        //Toast.makeText(context,"Por aquí",Toast.LENGTH_LONG).show();
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("name", editTextUsername.getText().toString());
@@ -68,21 +71,22 @@ public class RegisterActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "https://63bd4219fa38d30d85de40e4.mockapi.io/user",
+                "https://63c57b6af3a73b3478575467.mockapi.io/user",
                 requestBody,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Toast.makeText(context,"Por aquí",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Usuario creado",Toast.LENGTH_LONG).show();
+                        Intent I = new Intent(context, MainActivity.class);
+                        context.startActivity(I);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context,"Error"+error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
                     }
                 }
-
         );
         this.queue.add(request);
     }
