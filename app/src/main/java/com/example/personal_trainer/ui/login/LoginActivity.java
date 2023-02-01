@@ -21,7 +21,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.personal_trainer.MainActivity;
 import com.example.personal_trainer.R;
-import com.example.personal_trainer.ui.login.StatusActivity;
 import com.example.personal_trainer.ui.register.RegisterActivity;
 
 import org.json.JSONException;
@@ -64,14 +63,14 @@ public class LoginActivity extends AppCompatActivity {
     private void loginUser() {
         JSONObject requestBody = new JSONObject();
         try {
-            requestBody.put("username", username.getText().toString() );
-            requestBody.put("password", password.getText().toString()  );
+            requestBody.put("name", username.getText().toString());
+            requestBody.put("password", password.getText().toString());
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "https://63bd4219fa38d30d85de40e4.mockapi.io" + "/sessions",
+                "https://63c57b6af3a73b3478575467.mockapi.io/user?name="+username.getText().toString(),
                 requestBody,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -107,8 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        int serverCode = error.networkResponse.statusCode;
-                        Toast.makeText(context,"Código de respuesta: "+ serverCode, Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Código de respuesta: ", Toast.LENGTH_LONG).show();
                     }
                 }
         );
