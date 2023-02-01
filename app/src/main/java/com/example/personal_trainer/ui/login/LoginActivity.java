@@ -1,4 +1,3 @@
-
 package com.example.personal_trainer.ui.login;
 
 import android.annotation.SuppressLint;
@@ -87,6 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                             // la aplicación no podemos hacer nada. Estamos 'vendidos'.
                             throw new RuntimeException(e);
                         }
+                        // Si la respuesta está OK, mostramos un Toast
+                        // Esta línea asume que private Context context = this; está definido
                         Toast.makeText(context, "Token: " + receivedToken, Toast.LENGTH_LONG).show();
                         Intent I = new Intent(context, MainActivity.class);
                         context.startActivity(I);

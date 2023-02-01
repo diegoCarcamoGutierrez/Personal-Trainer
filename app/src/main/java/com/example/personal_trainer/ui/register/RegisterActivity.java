@@ -6,13 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.personal_trainer.R;
 //import com.example.personaltrainer.R; //es Personal-Trainer ahora
 
@@ -26,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText editTextEmail;
     private Button buttonRegister;
     private Context context = this;
+    private RequestQueue queue;
 
 
     @SuppressLint("MissingInflatedId")
@@ -38,20 +42,21 @@ public class RegisterActivity extends AppCompatActivity {
         editTextUsername = findViewById(R.id.username);
         editTextEmail = findViewById(R.id.mail);
         editTextPassword = findViewById(R.id.password1);
-        buttonRegister = findViewById(R.id.login);
+        buttonRegister = findViewById(R.id.registerButton);
 
         //Se activa cuando el usuario pulsa el boton de registro
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //   Toast.makeText(this, "Esperando",5).show();
                 sendPostRegister();
             }
         });
+
     }
 
     //método que hace una petición post
     private void sendPostRegister() {
+        queue = Volley.newRequestQueue(this);
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("username", editTextUsername.getText().toString());
@@ -63,22 +68,23 @@ public class RegisterActivity extends AppCompatActivity {
 
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                "https://63bd4219fa38d30d85de40e4.mockapi.io",
+                "https://63bd4219fa38d30d85de40e4.mockapi.io/user",
                 requestBody,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
+                        Toast.makeText(context,"Por aquí",Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
                     }
                 }
-        );
 
+        );
+        this.queue.add(request);
     }
 
 }
