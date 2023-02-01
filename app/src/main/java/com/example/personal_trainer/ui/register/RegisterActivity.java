@@ -43,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.mail);
         editTextPassword = findViewById(R.id.password1);
         buttonRegister = findViewById(R.id.registerButton);
+        queue=Volley.newRequestQueue(this);
 
         //Se activa cuando el usuario pulsa el boton de registro
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
     private void sendPostRegister() {
         JSONObject requestBody = new JSONObject();
         try {
-            requestBody.put("username", editTextUsername.getText().toString());
-            requestBody.put("email", editTextEmail.getText().toString());
+            requestBody.put("name", editTextUsername.getText().toString());
+            requestBody.put("mail", editTextEmail.getText().toString());
             requestBody.put("password", editTextPassword.getText().toString());
         } catch (JSONException e) {
             throw new RuntimeException(e);
@@ -78,7 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context,"Error",Toast.LENGTH_LONG).show();
+                        Toast.makeText(context,"Error"+error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }
 
