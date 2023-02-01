@@ -56,7 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     //método que hace una petición post
     private void sendPostRegister() {
-        queue = Volley.newRequestQueue(this);
         JSONObject requestBody = new JSONObject();
         try {
             requestBody.put("username", editTextUsername.getText().toString());
