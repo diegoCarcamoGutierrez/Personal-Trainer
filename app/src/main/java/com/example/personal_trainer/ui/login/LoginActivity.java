@@ -1,6 +1,6 @@
-
 package com.example.personal_trainer.ui.login;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.personal_trainer.MainActivity;
 import com.example.personal_trainer.R;
+import com.example.personal_trainer.ui.register.RegisterActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,9 +29,11 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
+    private TextView crearCuenta;
     private Button boton;
     private Context context= this;
     private RequestQueue queue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,16 @@ public class LoginActivity extends AppCompatActivity {
         username = findViewById(R.id.username);
         password = findViewById( R.id.password);
         boton = findViewById(R.id.login);
+        crearCuenta=findViewById(R.id.gotoRegister);
+
+        crearCuenta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent I = new Intent(context, RegisterActivity.class);
+                context.startActivity(I);
+            }
+        });
+
 
 
         boton.setOnClickListener(new View.OnClickListener() {
@@ -56,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
         JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
+                Request.Method.GET,
                 "https://63c57b6af3a73b3478575467.mockapi.io/user?name="+username.getText().toString(),
                 requestBody,
                 new Response.Listener<JSONObject>() {
@@ -64,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         String receivedToken;
                         try {
-                            receivedToken = response.getString("sessionToken");
+                            receivedToken = response.getString("id");
                         } catch (JSONException e) {
                             // Si el JSON de la respuesta NO contiene "sessionToken", vamos a lanzar
                             // una RuntimeException para que la aplicación rompa.
@@ -77,8 +91,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(context, "Token: " + receivedToken, Toast.LENGTH_LONG).show();
                         Intent I = new Intent(context, MainActivity.class);
                         context.startActivity(I);
-                        // Instanciamos un objeto de tipo SharedPreferences
-                        // En el constructor pasamos un String. SIEMPRE será el mismo para nuestra aplicación.
                         SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("VALID_USERNAME", username.getText().toString());
