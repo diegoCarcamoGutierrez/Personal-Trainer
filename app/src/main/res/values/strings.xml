@@ -1,5 +1,10 @@
 
 <resources>
+    <string-array name="exercises">
+        <item>Cardio</item>
+        <item>Fuerza</item>
+        <item>Flexibilidad</item>
+    </string-array>
     <string name="app_name">Personal-Trainer</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="prompt_email">Email</string>
