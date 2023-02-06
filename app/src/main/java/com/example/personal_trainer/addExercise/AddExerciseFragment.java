@@ -46,9 +46,9 @@ public class AddExerciseFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("userInfo", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
 
-        int userId = sharedPreferences.getInt("userId", 0);
+        int userId = sharedPreferences.getInt("userId",0);
         String url = "https://63c57b6af3a73b3478575467.mockapi.io/user/" + userId + "/exercises";
 
 

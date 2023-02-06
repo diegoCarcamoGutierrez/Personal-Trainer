@@ -71,9 +71,9 @@ public class LoginActivity extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        String receivedToken;
+                        int receivedToken;
                         try {
-                            receivedToken = response.getJSONObject(0).getString("id");
+                            receivedToken = response.getJSONObject(0).getInt("id");
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -83,8 +83,8 @@ public class LoginActivity extends AppCompatActivity {
                         SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("VALID_USERNAME", username.getText().toString());
-                        editor.putString("VALID_TOKEN", receivedToken);
-                        editor.commit();
+                        editor.putInt("userId", receivedToken);
+                        editor.apply();
                         finish();
 
                     }
