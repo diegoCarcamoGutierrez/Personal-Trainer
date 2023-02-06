@@ -17,12 +17,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.personal_trainer.MainActivity;
 import com.example.personal_trainer.R;
 import com.example.personal_trainer.ui.register.RegisterActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,32 +64,19 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        JSONObject requestBody = new JSONObject();
-        try {
-            requestBody.put("name", username.getText().toString());
-            requestBody.put("password", password.getText().toString());
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
-        }
-        JsonObjectRequest request = new JsonObjectRequest(
+        JsonArrayRequest request = new JsonArrayRequest(
                 Request.Method.GET,
                 "https://63c57b6af3a73b3478575467.mockapi.io/user?name="+username.getText().toString(),
-                requestBody,
-                new Response.Listener<JSONObject>() {
+                null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         String receivedToken;
                         try {
-                            receivedToken = response.getString("id");
+                            receivedToken = response.getJSONObject(0).getString("id");
                         } catch (JSONException e) {
-                            // Si el JSON de la respuesta NO contiene "sessionToken", vamos a lanzar
-                            // una RuntimeException para que la aplicación rompa.
-                            // En preferible que sea NOTORIO el problema del servidor, pues desde
-                            // la aplicación no podemos hacer nada. Estamos 'vendidos'.
                             throw new RuntimeException(e);
                         }
-                        // Si la respuesta está OK, mostramos un Toast
-                        // Esta línea asume que private Context context = this; está definido
                         Toast.makeText(context, "Token: " + receivedToken, Toast.LENGTH_LONG).show();
                         Intent I = new Intent(context, MainActivity.class);
                         context.startActivity(I);
@@ -101,7 +90,6 @@ public class LoginActivity extends AppCompatActivity {
                     }
 
                 },
-//comentario de prueba
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
