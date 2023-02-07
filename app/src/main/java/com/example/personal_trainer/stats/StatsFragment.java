@@ -1,7 +1,10 @@
 package com.example.personal_trainer.stats;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,6 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.personal_trainer.R;
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.ValueDependentColor;
+import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,5 +70,45 @@ public class StatsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stats, container, false);
+    }
+
+    private LineGraphSeries<DataPoint> point;
+    private GraphView funcion;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        funcion = view.findViewById(R.id.graph);
+        //"MAPEAR" LOS PUNTOS |las y son las horas pasadas, se cogen del historial
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 5),
+                new DataPoint(3, 6),
+                new DataPoint(4, 2),
+                new DataPoint(5, 2),
+                new DataPoint(6, 8)
+        });
+        //AÑADIRLOS A LA FUNIÓN
+        funcion.addSeries(series);
+
+        //DAR COLORES A LA BARRAS
+        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+            @Override
+            public int get(DataPoint data) {
+                return Color.rgb((int) data.getX()*255/4, (int) data.getY()*255/6, 100);
+            }
+        });
+
+        //ESPACIAR BARRAS
+        series.setSpacing(10);
+
+        //dibujar los puntos en la gráfica
+        series.setDrawValuesOnTop(true);
+        series.setValuesOnTopColor(Color.BLUE);
+
+
+
+
     }
 }
