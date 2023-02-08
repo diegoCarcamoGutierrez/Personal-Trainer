@@ -10,13 +10,21 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.example.personal_trainer.R;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,8 +80,10 @@ public class StatsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_stats, container, false);
     }
 
-    private LineGraphSeries<DataPoint> point;
+//    private LineGraphSeries<DataPoint> point;
     private GraphView funcion;
+//    private TextView resultTextView;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -107,8 +117,37 @@ public class StatsFragment extends Fragment {
         series.setDrawValuesOnTop(true);
         series.setValuesOnTopColor(Color.BLUE);
 
+    }
 
 
+    private void GetHour(){
+        //resultTextView = resultTextView.findViewById(R.id.resultTextView);
 
+        String url = "https://63c57b6af3a73b3478575467.mockapi.io/history";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String result = jsonObject.getString("result");
+                           // resultTextView.setText(result);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+
+        // Adding the string request to the queue
+     //   VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+}
     }
 }
