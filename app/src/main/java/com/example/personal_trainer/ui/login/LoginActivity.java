@@ -72,20 +72,27 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
                         int receivedToken;
+                        String pw;
                         try {
                             receivedToken = response.getJSONObject(0).getInt("id");
+                            pw = response.getJSONObject(0).getString("password");
+                            Toast.makeText(context,pw,Toast.LENGTH_SHORT).show();
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
-                        Toast.makeText(context, "Token: " + receivedToken, Toast.LENGTH_LONG).show();
-                        Intent I = new Intent(context, MainActivity.class);
-                        context.startActivity(I);
-                        SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("VALID_USERNAME", username.getText().toString());
-                        editor.putInt("userId", receivedToken);
-                        editor.apply();
-                        finish();
+                        if (password.getText().toString().equals(pw)){
+                            Toast.makeText(context, "Token: " + receivedToken, Toast.LENGTH_LONG).show();
+                            Intent I = new Intent(context, MainActivity.class);
+                            context.startActivity(I);
+                            SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("VALID_USERNAME", username.getText().toString());
+                            editor.putInt("userId", receivedToken);
+                            editor.apply();
+                            finish();
+                        }else {
+                            Toast.makeText(context,"Contraseña incorrecta",Toast.LENGTH_SHORT).show();
+                        }
 
                     }
 
