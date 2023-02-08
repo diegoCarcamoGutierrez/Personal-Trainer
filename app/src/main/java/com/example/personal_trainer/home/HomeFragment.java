@@ -19,6 +19,8 @@ import com.example.personal_trainer.R;
 
 import org.json.JSONArray;
 
+import java.util.Date;
+
 public class HomeFragment extends Fragment {
 
     @Override
@@ -28,12 +30,38 @@ public class HomeFragment extends Fragment {
         Context context=getContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
         int userId = sharedPreferences.getInt("userId",0);
-        String url = "https://63c57b6af3a73b3478575467.mockapi.io/user/" + userId + "/exercises";
+        String url = "https://63c57b6af3a73b3478575467.mockapi.io/user/" + userId+"/exercises";
         View view=inflater.inflate(R.layout.fragment_home,container,false);
 
         TextView totalTime=view.findViewById(R.id.totalTime);
         TextView burnedCalories=view.findViewById(R.id.burnedCalories);
-        TextView completedExercises=view.findViewById(R.id.completedExercises);return view;
+        TextView completedExercises=view.findViewById(R.id.completedExercises);
+
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        int tTime; //TotalTime o tiempo total de ejercicio
+                        int bCal; //BurnedCalories o calorías quemadas
+                        int cE; //CompletedExercises o total de ejercicios completados
+                        int actualDateMS= (int) System.currentTimeMillis();
+                        
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+
+
+        return view;
 
     }
 
