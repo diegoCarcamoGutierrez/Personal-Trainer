@@ -1,5 +1,7 @@
 package com.example.personal_trainer.addExercise;
 
+import static java.lang.Integer.parseInt;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -26,6 +28,10 @@ import androidx.fragment.app.Fragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AddExerciseFragment extends Fragment {
     Context context;
     @Override
@@ -37,7 +43,8 @@ public class AddExerciseFragment extends Fragment {
         EditText ejercicio = view.findViewById(R.id.ejercicio);
         EditText calorias = view.findViewById(R.id.calorias);
         EditText fecha = view.findViewById(R.id.fecha);
-        EditText duracion = view.findViewById(R.id.duracion);
+        EditText horas = view.findViewById(R.id.horas);
+        EditText minutos = view.findViewById(R.id.minutos);
         Button enviar = view.findViewById(R.id.enviar);
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());;
 
@@ -51,14 +58,33 @@ public class AddExerciseFragment extends Fragment {
         int userId = sharedPreferences.getInt("userId",0);
         String url = "https://63c57b6af3a73b3478575467.mockapi.io/user/" + userId + "/exercises";
 
-
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String nombreEjercicioR = ejercicio.getText().toString();
                 String caloriasQuemadasR = calorias.getText().toString();
+
+                //CONTROL DE FECHA VÁLIDA
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                sdf.setLenient(true);
                 String fechaR = fecha.getText().toString();
-                String duracionR = duracion.getText().toString();
+                boolean isValidDate = true;
+
+                try {
+                    Date date = sdf.parse(fechaR);
+                } catch (ParseException e) {
+                    isValidDate = false;
+                    Toast.makeText(context, "Formato de fecha no válido", Toast.LENGTH_LONG).show();
+                }
+                if (!isValidDate) {
+                    return;
+                }
+                String minutosR=minutos.getText().toString();
+                int minutosF=Integer.parseInt(minutosR);
+                String horasR=horas.getText().toString();
+                int horasF=Integer.parseInt(horasR);
+                int duracionR=(horasF*60)+minutosF;
+
                 String tipoDeEjercicioR = spinner.getSelectedItem().toString();
 
                 JSONObject jsonObject = new JSONObject();
