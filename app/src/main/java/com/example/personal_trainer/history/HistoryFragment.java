@@ -63,7 +63,7 @@ public class HistoryFragment extends Fragment {
         SharedPreferences sharedPreferences = context.getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
 
         int userId = sharedPreferences.getInt("userId",0);
-        String url = "https://63c57b6af3a73b3478575467.mockapi.io/user/" + "1" + "/exercises";
+        String url = "https://63c57b6af3a73b3478575467.mockapi.io/user/" + userId + "/exercises";
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
