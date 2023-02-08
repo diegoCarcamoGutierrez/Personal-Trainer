@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.example.personal_trainer.R;
 
@@ -32,19 +33,8 @@ public class HomeFragment extends Fragment {
 
         TextView totalTime=view.findViewById(R.id.totalTime);
         TextView burnedCalories=view.findViewById(R.id.burnedCalories);
-        TextView completedExercises=view.findViewById(R.id.completedExercises);
-        timeCounter(url);
-        return view;
+        TextView completedExercises=view.findViewById(R.id.completedExercises);return view;
 
     }
 
-    private int timeCounter(String url){
-        JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(
-                Request.Method.GET,
-                new Response.Listener<JSONArray>(){
-                    
-                }
-
-        )
-    }
 }
