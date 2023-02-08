@@ -79,7 +79,7 @@ public class AddExerciseFragment extends Fragment {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-                                Toast.makeText(context.getApplicationContext(), "Ejercicio añadido", Toast.LENGTH_LONG).show();
+                                Toast.makeText(context, "Ejercicio añadido", Toast.LENGTH_LONG).show();
                             }
                         }, new Response.ErrorListener() {
                     @Override
