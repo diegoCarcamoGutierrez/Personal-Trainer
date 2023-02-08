@@ -149,5 +149,3 @@ public class StatsFragment extends Fragment {
      //   VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 }
-    }
-}
