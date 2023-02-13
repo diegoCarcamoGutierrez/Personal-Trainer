@@ -34,10 +34,13 @@ import java.util.Date;
 
 public class AddExerciseFragment extends Fragment {
     Context context;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Context context = getContext();
         View view = inflater.inflate(R.layout.fragment_add_exercise,container, false);
+
+
 
         Spinner spinner = view.findViewById(R.id.exercise_spinner);
         EditText ejercicio = view.findViewById(R.id.ejercicio);
@@ -84,6 +87,7 @@ public class AddExerciseFragment extends Fragment {
                 String horasR=horas.getText().toString();
                 int horasF=Integer.parseInt(horasR);
                 int duracionR=(horasF*60)+minutosF;
+
 
                 String tipoDeEjercicioR = spinner.getSelectedItem().toString();
 

@@ -1,5 +1,7 @@
 package com.example.personal_trainer.stats;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -13,18 +15,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.personal_trainer.R;
+import com.example.personal_trainer.addExercise.AddExerciseFragment;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -79,60 +87,66 @@ public class StatsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_stats, container, false);
     }
+/**************************************************************************************************/
 
-//    private LineGraphSeries<DataPoint> point;
+
+    /**************************************************************************************************/
     private GraphView funcion;
-//    private TextView resultTextView;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         funcion = view.findViewById(R.id.graph);
-        //"MAPEAR" LOS PUNTOS |las y son las horas pasadas, se cogen del historial
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 5),
-                new DataPoint(3, 6),
-                new DataPoint(4, 2),
-                new DataPoint(5, 2),
-                new DataPoint(6, 8)
-        });
-        //AÑADIRLOS A LA FUNIÓN
-        funcion.addSeries(series);
 
-        //DAR COLORES A LA BARRAS
-        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-            @Override
-            public int get(DataPoint data) {
-                return Color.rgb((int) data.getX()*255/4, (int) data.getY()*255/6, 100);
-            }
-        });
-
-        //ESPACIAR BARRAS
-        series.setSpacing(10);
-
-        //dibujar los puntos en la gráfica
-        series.setDrawValuesOnTop(true);
-        series.setValuesOnTopColor(Color.BLUE);
-
-    }
-
-
-    private void GetHour(){
-        //resultTextView = resultTextView.findViewById(R.id.resultTextView);
-
-        String url = "https://63c57b6af3a73b3478575467.mockapi.io/history";
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
+        int userId = sharedPreferences.getInt("userId", 0);
+        ;
+        String url = "https://63c57b6af3a73b3478575467.mockapi.io/user/" + userId + "/exercises";
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            String result = jsonObject.getString("result");
-                           // resultTextView.setText(result);
+                            JSONArray jsonArray = new JSONArray(response);
+                            // aquí podemos acceder a los datos de la respuesta utilizando el método get
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                int duration = jsonObject.getInt("duration");
+                                String start_date = jsonObject.getString("start-date");
+
+                                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+                                        //  DataPoint[] dataPoints = {new DataPoint(0, duration)};
+                                        new DataPoint(1, duration),
+                                        new DataPoint(3, duration),
+                                        // new DataPoint(4, duration),
+                                        //  new DataPoint(5, duration),
+                                        //  new DataPoint(6, duration),
+                                        //  new DataPoint(7, duration)
+                                });
+
+                                //AÑADIRLOS A LA FUNIÓN
+                                funcion.addSeries(series);
+                                //DAR COLORES A LA BARRAS
+                                series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                                    @Override
+                                    public int get(DataPoint data) {
+                                        return Color.rgb((int) data.getX() * 255 / 4, (int) data.getY() * 255 / 6, 100);
+                                    }
+                                });
+
+                                //ESPACIAR BARRAS
+                                series.setSpacing(10);
+
+                                //dibujar los puntos en la gráfica
+                                series.setDrawValuesOnTop(true);
+                                series.setValuesOnTopColor(Color.BLUE);
+                            }
+
+
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -141,11 +155,11 @@ public class StatsFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
+                        //error
                     }
                 });
 
-        // Adding the string request to the queue
-     //   VolleySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
     }
 }
