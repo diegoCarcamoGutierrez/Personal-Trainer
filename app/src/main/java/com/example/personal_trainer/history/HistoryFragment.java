@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -32,7 +33,7 @@ public class HistoryFragment extends Fragment {
     RecyclerView recyclerExercises;
     Exercise_Adapter exercise_adapter;
     List<Exercise> exerciseList;
-
+    TextView titulo;
     public HistoryFragment() {
 
     }
@@ -43,9 +44,18 @@ public class HistoryFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_exercise_history, container, false);
+        titulo= view.findViewById(R.id.titulo);
+
+        Context context = getContext();
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
+
+        String username = sharedPreferences.getString("VALID_USERNAME","user");
+
+        titulo.setText("Ejercicios de : " + username);
         loadExercises();
         initialize(view);
-
+        titulo= view.findViewById(R.id.titulo);
 
         return view;
     }

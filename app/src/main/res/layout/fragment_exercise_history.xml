@@ -10,11 +10,12 @@
     android:onClick="linearlayout">
 
     <TextView
+        android:text="Ejercicios de: user"
+        android:layout_gravity="center"
         android:id="@+id/titulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAlignment="center"
-        android:text="Ejercicios realizados"
         android:textColor="#10ECEA"
         android:textSize="25dp"
         android:gravity="center_horizontal"
