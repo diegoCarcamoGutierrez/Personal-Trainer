@@ -18,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.personal_trainer.R;
@@ -103,53 +104,47 @@ public class StatsFragment extends Fragment {
         int userId = sharedPreferences.getInt("userId", 0);
         ;
         String url = "https://63c57b6af3a73b3478575467.mockapi.io/user/" + userId + "/exercises";
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
                 url,
-                new Response.Listener<String>() {
+                null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray jsonArray = new JSONArray(response);
-                            // aquí podemos acceder a los datos de la respuesta utilizando el método get
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                int duration = jsonObject.getInt("duration");
-                                String start_date = jsonObject.getString("start-date");
-
-                                BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
-                                        //  DataPoint[] dataPoints = {new DataPoint(0, duration)};
-                                        new DataPoint(1, duration),
-                                        new DataPoint(3, duration),
-                                        // new DataPoint(4, duration),
-                                        //  new DataPoint(5, duration),
-                                        //  new DataPoint(6, duration),
-                                        //  new DataPoint(7, duration)
-                                });
-
-                                //AÑADIRLOS A LA FUNIÓN
-                                funcion.addSeries(series);
-                                //DAR COLORES A LA BARRAS
-                                series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-                                    @Override
-                                    public int get(DataPoint data) {
-                                        return Color.rgb((int) data.getX() * 255 / 4, (int) data.getY() * 255 / 6, 100);
-                                    }
-                                });
-
-                                //ESPACIAR BARRAS
-                                series.setSpacing(10);
-
-                                //dibujar los puntos en la gráfica
-                                series.setDrawValuesOnTop(true);
-                                series.setValuesOnTopColor(Color.BLUE);
+                    public void onResponse(JSONArray response) {
+                        int duration=0;
+                        for(int i=0;i<response.length();i++){
+                            try {
+                                duration=duration+Integer.parseInt(response.getJSONObject(i).getString("duration"));
+                            }catch (JSONException e){
+                                e.printStackTrace();
                             }
-
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+
+                        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+                                new DataPoint(0,0),
+                                new DataPoint(1, duration)
+                        });
+
+
+                        //AÑADIRLOS A LA FUNIÓN
+                        funcion.addSeries(series);
+
+                        //DAR COLORES A LA BARRAS
+                        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                            @Override
+                            public int get(DataPoint data) {
+                                return Color.rgb((int) data.getX()*255/4, (int) data.getY()*255/6, 100);
+                            }
+                        });
+
+                        //ESPACIAR BARRAS
+                        series.setSpacing(10);
+
+                        //dibujar los puntos en la gráfica
+                        series.setDrawValuesOnTop(true);
+                        series.setValuesOnTopColor(Color.BLUE);
+
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -160,6 +155,6 @@ public class StatsFragment extends Fragment {
                 });
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
+        requestQueue.add(request);
     }
 }
