@@ -43,8 +43,10 @@ public class HistoryFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_exercise_history, container, false);
-        initialize(view);
         loadExercises();
+        initialize(view);
+
+
         return view;
     }
 
@@ -54,7 +56,6 @@ public class HistoryFragment extends Fragment {
 
         exerciseList = new ArrayList<>();
         exercise_adapter = new Exercise_Adapter(exerciseList, getActivity());
-        recyclerExercises.setAdapter(exercise_adapter);
     }
 
     private void loadExercises() {
@@ -62,7 +63,9 @@ public class HistoryFragment extends Fragment {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
 
-        int userId = sharedPreferences.getInt("userId",0);
+        int userId = sharedPreferences.getInt("userId",2);
+        String username = sharedPreferences.getString("VALID_USERNAME","user");
+
         String url = "https://63c57b6af3a73b3478575467.mockapi.io/user/" + userId + "/exercises";
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -74,6 +77,7 @@ public class HistoryFragment extends Fragment {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
+
                         Toast.makeText(context, "Manten pulsado para editar un ejercicio", Toast.LENGTH_LONG).show();
 
                         List<Exercise> exerciseList = new ArrayList<>();
@@ -89,18 +93,22 @@ public class HistoryFragment extends Fragment {
                                 Exercise exercise = new Exercise(id, name, duration, calories);
                                 exerciseList.add(exercise);
                             } catch (JSONException e) {
+                                Toast.makeText(context, "Se ha producido un error", Toast.LENGTH_LONG).show();
+
                                 e.printStackTrace();
                             }
                         }
 
                         exercise_adapter.setExerciseList(exerciseList);
+                        recyclerExercises.setAdapter(exercise_adapter);
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Context context = getContext();
-
+                        System.out.println(error);
                         Toast.makeText(context, "Se ha producido un error", Toast.LENGTH_LONG).show();
                     }
                 }

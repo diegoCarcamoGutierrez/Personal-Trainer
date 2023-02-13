@@ -3,25 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".history.historial"
+    tools:context=".history.HistoryFragment"
     android:orientation="vertical"
     android:onClick="linearlayout">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:textAlignment="center"
         android:text="Ejercicios realizados"
+        android:textColor="#10ECEA"
         android:textSize="25dp"
         android:gravity="center_horizontal"
         />
 
     <androidx.recyclerview.widget.RecyclerView
+android:layout_marginTop="25dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/recyclerview"
+        android:paddingBottom="15dp"
         />
 
 

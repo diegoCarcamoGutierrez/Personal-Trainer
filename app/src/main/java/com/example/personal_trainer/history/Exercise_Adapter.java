@@ -35,8 +35,8 @@ public class Exercise_Adapter extends RecyclerView.Adapter<Exercise_Adapter.View
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtNombre.setText(exerciseList.get(position).getNombreEjercicio());
-        holder.txtDuracion.setText(exerciseList.get(position).getDuracion());
-        holder.txtCalorias.setText(exerciseList.get(position).getCalorias());
+        holder.txtDuracion.setText(exerciseList.get(position).getDuracion()+" minutos");
+        holder.txtCalorias.setText(exerciseList.get(position).getCalorias()+" calorías");
 
     }
 
