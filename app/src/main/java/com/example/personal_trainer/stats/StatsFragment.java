@@ -89,9 +89,13 @@ public class StatsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_stats, container, false);
     }
 /**************************************************************************************************/
+/*COMENTARIOS SOBRE EL CODIGO:
+   EL gráfico muestra los minutos totales del tiempo dedicado(las 7 barras indican lo mismo).
+   Al final, hay un codigo comentado con un for, es un intento para separar por dias con un array, pero
+   el primer intento se bugeaba y mostraba las barras raras.
 
-
-    /**************************************************************************************************/
+*/
+/**************************************************************************************************/
     private GraphView funcion;
 
     @Override
@@ -166,13 +170,7 @@ public class StatsFragment extends Fragment {
     }
 }
 
-
-
-
-
 //CODIGO PARA PONERLO POR DIFERENTES DIAS EN LOS ULTIMOS 7, ESTA MAL
-
-
 
              /*           for(int i=0;i<response.length();i++){
                             try {
