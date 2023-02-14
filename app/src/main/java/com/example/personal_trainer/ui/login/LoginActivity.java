@@ -39,13 +39,26 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences preferences = getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
+        String userLogged = preferences.getString("VALID_USERNAME", "");
+        int userId = preferences.getInt("userId", -1);
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         username = findViewById(R.id.username);
         password = findViewById( R.id.password);
         boton = findViewById(R.id.login);
         crearCuenta=findViewById(R.id.gotoRegister);
-
+        if (!userLogged.isEmpty() && userId != -1) {
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putString("VALID_USERNAME", userLogged);
+            editor.putInt("userId", userId);
+            editor.apply();
+            Intent i = new Intent(context,MainActivity.class);
+            startActivity(i);
+            finish();
+        }
         crearCuenta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
