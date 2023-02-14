@@ -9,18 +9,33 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Tiempo Total de ejercicio"
+        android:textSize="30dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/totalTime"
-        android:text="Prueba"/>
+        android:textSize="25dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Total de calorías quemadas"
+        android:textSize="30dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/burnedCalories"
-        android:text="Prueba2"/>
+        android:textSize="25dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Número de ejercicios realizados"
+        android:textSize="30dp"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/completedExercises"
-        android:text="Prueba3"/>
+        android:textSize="25dp"/>
 
 
 </LinearLayout>
