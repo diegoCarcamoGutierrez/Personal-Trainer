@@ -10,6 +10,7 @@
     android:onClick="linearlayout">
 
     <TextView
+        android:paddingBottom="15dp"
         android:text="Ejercicios de: user"
         android:layout_gravity="center"
         android:id="@+id/titulo"
@@ -18,11 +19,9 @@
         android:textAlignment="center"
         android:textColor="#10ECEA"
         android:textSize="25dp"
-        android:gravity="center_horizontal"
         />
 
     <androidx.recyclerview.widget.RecyclerView
-android:layout_marginTop="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recyclerview"

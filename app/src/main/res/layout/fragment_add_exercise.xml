@@ -6,49 +6,69 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:orientation="vertical" >
+    <TextView
+        android:paddingBottom="15dp"
+        android:text="Añadir ejercicio"
+        android:layout_gravity="center"
+        android:id="@+id/titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#00FFFD"
+        android:textSize="25dp"    />
 
     <EditText
+
         android:id="@+id/ejercicio"
         android:layout_width="381dp"
         android:layout_height="wrap_content"
         android:hint="Nombre del Ejercicio"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:textColor="#00FFFD"/>
 
     <EditText
         android:id="@+id/fecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Fecha actual"
-        android:inputType="date"/>
+        android:hint="Fecha actual (dd/mm/yyyy)"
+        android:inputType="date"
+        android:textColor="#00FFFD"/>
     <EditText
         android:id="@+id/horas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Horas"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:textColor="#00FFFD"/>
     <EditText
         android:id="@+id/minutos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Minutos"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:textColor="#00FFFD"/>
     <EditText
         android:id="@+id/calorias"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Calorías quemadas"
-        android:inputType="number"/>
+        android:inputType="number"
+        android:textColor="#00FFFD"/>
+
     <Spinner
         android:id="@+id/exercise_spinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="10dp"/>
+        android:layout_height="40dp"
+        android:autofillHints="Tipo"
+        android:textColor="#00FFFD"
+        android:layout_marginTop="5dp"/>
 
     <Button
+        android:layout_marginTop="15dp"
         android:id="@+id/enviar"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="#41952E"
         android:text="Enviar" />
 </LinearLayout>
