@@ -98,6 +98,7 @@ public class StatsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         funcion = view.findViewById(R.id.graph);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
@@ -122,7 +123,13 @@ public class StatsFragment extends Fragment {
 
                         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
                                 new DataPoint(0,0),
-                                new DataPoint(1, duration)
+                                new DataPoint(1, duration),
+                                new DataPoint(2, duration),
+                                new DataPoint(3, duration),
+                                new DataPoint(4, duration),
+                                new DataPoint(5, duration),
+                                new DataPoint(6, duration),
+                                new DataPoint(7, duration)
                         });
 
 
@@ -158,3 +165,72 @@ public class StatsFragment extends Fragment {
         requestQueue.add(request);
     }
 }
+
+
+
+
+
+//CODIGO PARA PONERLO POR DIFERENTES DIAS EN LOS ULTIMOS 7, ESTA MAL
+
+
+
+             /*           for(int i=0;i<response.length();i++){
+                            try {
+                                duration=duration+Integer.parseInt(response.getJSONObject(i).getString("duration"));
+                                data_started=data_started+(response.getJSONObject(i).getString("data-started"));
+
+                                    if (data_started != data_started2 ){
+                                        data_started2 = data_started;
+
+                                    }else{
+                                       for (int x=0;x<7;x++){
+
+                                            Array[x] = duration;
+
+                                            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[]{
+
+                                                    new DataPoint(0,0),
+                                                    new DataPoint(1, Array[6]),
+                                                    new DataPoint(2, Array[5]),
+                                                    new DataPoint(3, Array[4]),
+                                                    new DataPoint(4, Array[3]),
+                                                    new DataPoint(5, Array[2]),
+                                                    new DataPoint(6, Array[1]),
+                                                    new DataPoint(7, Array[0])
+                                            });
+
+                                            //AÑADIRLOS A LA FUNIÓN
+                                            funcion.addSeries(series);
+                                            //DAR COLORES A LA BARRAS
+                                            series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                                                @Override
+                                                public int get(DataPoint data) {
+                                                    return Color.rgb((int) data.getX()*255/4, (int) data.getY()*255/6, 100);
+                                                }
+                                            });
+
+                                            //ESPACIAR BARRAS
+                                            series.setSpacing(10);
+
+                                            //dibujar los puntos en la gráfica
+                                            series.setDrawValuesOnTop(true);
+                                            series.setValuesOnTopColor(Color.BLUE);
+                                    }
+                                }
+
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //error
+                    }
+                });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(request);
+        */
