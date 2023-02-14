@@ -63,6 +63,7 @@ public class HistoryFragment extends Fragment {
     private void initialize(View view) {
         recyclerExercises = view.findViewById(R.id.recyclerview);
         recyclerExercises.setLayoutManager(new LinearLayoutManager(getActivity()));
+        registerForContextMenu(recyclerExercises);
 
         exerciseList = new ArrayList<>();
         exercise_adapter = new Exercise_Adapter(exerciseList, getActivity());
@@ -126,5 +127,4 @@ public class HistoryFragment extends Fragment {
 
         requestQueue.add(request);
     }
-
 }
